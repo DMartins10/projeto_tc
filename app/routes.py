@@ -1,6 +1,6 @@
 from app import app
 
 @app.route('/')
-@app.route('/index')
-def index():
+@app.route('/inicio')
+def inicio():
     return "Hello World!!!"
