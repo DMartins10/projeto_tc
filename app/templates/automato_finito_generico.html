@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<style>
+    .estrutura {
+            display: grid;
+            grid-template-columns: 5fr 1fr;
+            grid-template-rows: 1fr 5fr .5fr;
+            grid-template-areas: 
+                'header header'
+                'main main'
+                'footer footer';
+    }
+    .bigcontainer{
+        display: grid;
+        grid-template-columns:  250px 250px 1fr ;
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas: 
+            "pagename pagename pagename"
+            "entradas rotas commands"
+            "entradas rotas logs"
+        }
+
+    .pagename{
+        grid-area: pagename;
+    }
+    .commands{
+        grid-area: commands;
+    }
+    .entradas{
+        grid-area: entradas;
+    }
+    .entradas_individuais{
+        padding: 0;
+    }
+
+    .checks{
+        grid-area: checks;
+    }
+    .rotas{
+        grid-area: rotas;
+    }
+
+    .logs{
+        grid-area: logs;
+    }
+
+    .bigcontainer > div{
+        background: #eee;
+        padding: 1em;
+        border: black 1px solid;
+    }
+
+    @media screen and (max-width: 800px) {
+        .bigcontainer {
+            grid-template-areas: 
+                    "pagename"
+                    "entradas"
+                    "commands" 
+                    "rotas"
+                    "logs";
+            grid-template-columns: 1fr;        
+            grid-template-rows: auto auto auto auto auto;
+            background-color: #eeeeee;
+        }
+    }
+</style>
+{% endblock %}
+
+
+
+{% block main %}
+    <div class="bigcontainer">
+        <div class="pagename">
+            <h1>Constroi o teu Autómato Finito</h1>
+        </div>
+
+        <div class="commands">
+            <input type="button" id="btn1" value="Gerar Dicionário" onclick="gerardicionario()"/>
+            <input type="button" id="btn2" disabled value="Cálculo" onclick="calculo()"/>
+        </div>
+
+        <div class="entradas">
+                <label for="alfabeto">Defina o Alfabeto</label><br>
+                <input type="text" id="alfabeto" name="alfabeto" style="width: 220px;height: 40px; font-size: 15px;"><br><br>
+                <label for="Estados">Todos os estados possíveis</label><br>
+                <input type="text" id="Estados" name="Estados" style="width: 220px;height: 40px; font-size: 15px;"><br><br>
+                <label for="EInicial">Estado Inicial</label><br>
+                <input type="text" id="EInicial" name="EInicial" style="width: 220px;height: 40px; font-size: 15px;"><br><br>
+                <label for="EAceitacao" >Estados de Aceitação</label><br>
+                <input type="text" id="EAceitacao" name="EAceitacao" style="width: 220px;height: 40px; font-size: 15px;"><br><br>
+                <label for="Automato">Sequencia a ser examinada</label><br>
+                <input type="text" id="Automato" name="Automato" style="width: 220px;height: 40px; font-size: 15px;"><br>
+        </div>
+        <div class="rotas" id="rotas">
+
+        </div>
+
+        <div class="logs">
+            <h4 style="text-align:center;">LOG's</h4>
+            Alfabeto: <span id="log_alfabeto"></span><br><br>
+            Estados: <span id="log_estados"></span><br><br>
+            Estado Inicial: <span id="log_estado_inicial"></span><br><br>
+            Estados Aceites: <span id="log_estados_aceites"></span><br><br>
+            Caminho: <span id="log_caminho"></span><br><br>
+            Estado Inicial pertence aos estados: <span id="log_estado_inicial_pertence_aos_estados"></span><br><br>
+            Estados de Aceitação pertencem aos estados: <span id="log_estados_aceitacao_pertencem_aos_estados"></span><br>
+
+        </div>
+    </div>
+    <script type="text/javascript" src="{{url_for('static', filename = 'automato.js') }}"></script>
+{% endblock %}

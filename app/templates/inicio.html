@@ -1,0 +1,155 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<style>
+    .footer {
+    position: initial;
+
+}
+</style>
+{% endblock %}
+
+
+{% block main %}
+<div class="container-fluid text-center">    
+    <div class="row content">
+    <div class="col-sm-9 text-left"> 
+        {% if resultado == 0 %}
+            <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <strong>Erro!</strong> O nome de utilizador ou a password estão incorretas.
+            </div>
+        {% endif %}
+
+        <h1 style="padding: 10px;">Projeto Final - Teoria da Computação</h1>
+        <p style="padding: 20px; font-size: 20px;">Esta App Web foi realizada por <b>David Capitão</b> e <b>Diogo Martins</b>, no âmbito da cadeira de 
+                3º Ano de Engenharia Infórmatica <b>Teoria da Computação</b>. Neste projeto abordamos matérias que foram 
+                desenvolvidas durante o semestre, nomeadamente:</p>
+
+        <ul style="font-size: 20px;">
+            <li><i>Expressões Regulares</i></li></br>              
+            <li><i>Autómatos Finitos</i></li></br>
+            <li><i>Autómatos em Pilha</i></li></br>
+            <li><i>Máquinas de Turing</i></li></br>
+        </ul>
+
+        <p style="padding: 20px; font-size: 20px;">Abordamos também outros conhecimentos adquiridos autonomamente, como por exemplo:</p>
+
+        <ul style="font-size: 20px;">
+            <li><i>Javascript</i></li></br>              
+            <li><i>WebScraping</i></li></br>
+            <li><i>Qt Design</i></li></br>
+
+        </ul>
+        
+        <hr>    <!-- Linha de Separação -->
+    
+        </div>
+    <div class="col-sm-3 sidenav">
+        <div class="well">
+            <p>Hora Atual: {{ tempo[1] }} </p>
+            <p>Next Update: {{ tempo[0] }}</p>
+        </div>
+        <div class="well">
+            <h2>Estão {{ temperatura[0] }} em Lisboa</h2>
+        </div>
+
+        <div class="well">  
+            <h3><u><i>Steam</i></u></h3>
+            <br>
+            <ul>
+                <li style="text-align: left; font-size: 20px;">Online: <b>{{ steam[0] }}</b> users</li>
+                <br>
+                <li style="text-align: left; font-size: 20px;">Pico: <b>{{ steam[1] }}</b> users</li>
+            </ul>
+        </div>
+
+        <div class="well">
+            <h3><u><i>Últimas Notícias</i></u></h3>
+            <br>
+            {% for i in range(4) %}
+            <a href=" {{ noticias[i][2] }} ">
+                <h4>{{ noticias[i][1] }}</h4>
+                <img src="{{ noticias[i][0] }}" alt="Lamp" width="300" height="200">
+            </a>
+                {% if i != 3 %}
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="well">
+            <h3><u><i>Pandemia Covid-19</i></u></h3>
+            <br>
+            <table class="table table-responsive">
+                <thead>
+                <tr>
+                <th scope="col"></th>
+                <th scope="col">Casos Confirmados</th>
+                <th scope="col">Total de Recuperados</th>
+                <th scope="col">Total de Óbitos</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <th scope="row">Portugal</th>
+                <td class="cv-confirmed">
+                {{ cov19['PConfirmados'] }}
+                </td>
+                <td class="cv-recovered">
+                {{ cov19['PRecuperados'] }}
+                </td>
+                <td class="cv-deaths">
+                {{ cov19['PObitos'] }}
+                </td>
+                </tr>
+                <tr class="spacer"></tr>
+                <tr>
+                <th scope="row">Mundo</th>
+                <td class="cv-confirmed">
+                {{ cov19['MConfirmados'] }}
+                </td>
+                <td class="cv-recovered">
+                {{ cov19['MRecuperados'] }}
+                </td>
+                <td class="cv-deaths">
+                {{ cov19['MObitos'] }}
+                </td>
+                </tr>
+                </tbody>
+                </table>
+        </div>
+
+
+        <!-- <div class="well">
+            <a href=" {{ noticias[0][2] }} ">
+                <h4>{{ noticias[0][1] }}</h4>
+                <img src="{{ noticias[0][0] }}" alt="Lamp" width="200" height="200">
+            </a>
+            
+            <hr>
+
+            <a href=" {{ noticias[1][2] }} ">
+                <h4>{{ noticias[1][1] }}</h4>
+                <img src="{{ noticias[1][0] }}" alt="Lamp" width="200" height="200">
+            </a>
+
+            <hr>
+
+            <a href=" {{ noticias[2][2] }} ">
+                <h4>{{ noticias[2][1] }}</h4>
+                <img src="{{ noticias[2][0] }}" alt="Lamp" width="200" height="200">
+            </a>
+
+            <hr>
+
+            <a href=" {{ noticias[3][2] }} ">
+                <h4>{{ noticias[3][1] }}</h4>
+                <img src="{{ noticias[3][0] }}" alt="Lamp" width="200" height="200">
+            </a>
+        </div> -->
+
+    </div>
+    </div>
+</div>
+{% endblock %}

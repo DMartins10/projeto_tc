@@ -1,0 +1,198 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<style>
+    .estrutura {
+            display: grid;
+            grid-template-columns: 5fr 1fr;
+            grid-template-rows: 1fr 5fr .5fr;
+            grid-template-areas: 
+                'header header'
+                'main main'
+                'footer footer';
+    }
+    .conteudo {
+        grid-area: conteudo;
+        display: grid;
+        padding: 4em;
+        grid-template-areas: "formulario designacao"
+                                "resposta resposta1";
+        grid-template-columns: 30% 70%;
+        grid-template-rows: 70% 30%;
+        background-color: #eeeeee;
+    }
+
+    .formulario {
+        grid-area: formulario;
+        font-size: 25px;
+        grid-auto-rows: 210px;
+    }
+
+    .designacao {
+        grid-area: designacao;
+        font-size: 25px;
+        /* background-color: greenyellow; */
+        grid-auto-rows: 210px;
+        padding: 1em;
+    }
+
+    .resposta {
+        grid-area: resposta;
+        font-size: 20px;
+        padding: 1em;
+        text-align: center;
+    }
+
+    /* Configuração do Button */
+    .button {
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition-duration: all 0.5s;
+            background-color: #ccc;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #ccc;
+            color: black;
+            box-shadow: 10px 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+
+    @media screen and (max-width: 1000px) {
+            .conteudo {
+                grid-template-areas: 
+                        "designacao"
+                        "formulario"
+                        "resposta" 
+                        "resposta1";
+                grid-template-columns: 1fr;        
+                grid-template-rows: 60% 30% 10% .01%;
+                background-color: #eeeeee;
+            }
+        }
+</style>
+{% endblock %}
+
+
+
+{% block main %}
+<div class="conteudo">
+<!-------------------- PÁGINA VAZIA -------------------->
+    {% if resultado_a == -1 and resultado_b == -1 %}
+        <div class="formulario">
+            <form action="automato_finito" method="POST">
+                <label for="name">Sequência:</label>
+                <input type="text" id="sequecia" name="sequencia" placeholder="Introduza uma sequência*" style="width: 220px;height: 30px; font-size: 15px;"
+                pattern="[0|1]*" title="Sequência com 0 ou 1"></br></br>
+                    
+                <button class="button" type="submit" value="Submit">Validar</button>
+            </form>
+        </div>
+        <div class="designacao">
+            <b>Sequência que começam e terminam com o mesmo simbolo:</b></br></br>
+            <b>Sequência que têm um número de 0's múltiplos de 3:</b>
+        </div>
+        <div class="resposta"></div>
+    {% endif %}
+
+<!-------------------- RESULTADO => CAMPO VAZIO -------------------->
+    {% if resultado_a == -2 and resultado_b == -2 %}
+        <div class="formulario">
+            <form action="automato_finito" method="POST">
+                <label for="name">Sequência:</label>
+                <input type="text" id="sequecia" name="sequencia" placeholder="Introduza uma sequência*" style="width: 200px;height: 30px; font-size: 15px;"
+                pattern="[0|1]*" title="Sequência com 0 ou 1"></br></br>
+                    
+                <button class="button" type="submit" value="Submit">Validar</button>
+            </form>
+        </div>
+        <div class="designacao">
+            <b>Sequência que começam e terminam com o mesmo simbolo: </b><u>Rejeitada</u></br></br>
+            <b>Sequência que têm um número de 0's múltiplos de 3: </b><u>Rejeitada</u>
+        </div>
+        <div class="resposta">
+            NÃO INSERIU NADA NO CAMPO DA SEQUÊNCIA, POR FAVOR TENTE NOVAMENTE
+        </div>
+    {% endif %} 
+
+<!-------------------- RESULTADO => SEQ. A = ACEITE // SEQ. B = ACEITE -------------------->
+    {% if resultado_a == 0 and resultado_b == 0 %}
+        <div class="formulario">
+            <form action="automato_finito" method="POST">
+                <label for="name">Sequência:</label>
+                <input type="text" id="sequecia" name="sequencia" placeholder="{{ sequencia }}" style="width: 200px;height: 30px; font-size: 15px;"
+                pattern="[0|1]*" title="Sequência com 0 ou 1"></br></br>
+                    
+                <button class="button" type="submit" value="Submit">Validar</button>
+            </form>
+        </div>
+        <div class="designacao">
+            <b>Sequência que começam e terminam com o mesmo simbolo: </b><u>Aceite</u></br></br>
+            <b>Sequência que têm um número de 0's múltiplos de 3: </b><u>Aceite</u>
+        </div>
+        <div class="resposta">
+            SEQUÊNCIA ACEITE
+        </div>
+    {% endif %}
+
+<!-------------------- RESULTADO => SEQ. A = ACEITE // SEQ. B = REJEITADA -------------------->
+    {% if resultado_a == 0 and resultado_b == 1 %}
+        <div class="formulario">
+            <form action="automato_finito" method="POST">
+                <label for="name">Sequência:</label>
+                <input type="text" id="sequecia" name="sequencia" placeholder="{{ sequencia }}" style="width: 200px;height: 30px; font-size: 15px;"
+                pattern="[0|1]*" title="Sequência com 0 ou 1"></br></br>
+                    
+                <button class="button" type="submit" value="Submit">Validar</button>
+            </form>
+        </div>
+        <div class="designacao">
+            <b>Sequência que começam e terminam com o mesmo simbolo: </b><u>Aceite</u></br></br>
+            <b>Sequência que têm um número de 0's múltiplos de 3: </b><u>Rejeitada</u>
+        </div>
+        <div class="resposta">
+            SEQUÊNCIA REJEITADA
+        </div>
+    {% endif %}
+
+<!-------------------- RESULTADO => SEQ. A = REJEITADA // SEQ. B = ACEITE -------------------->
+    {% if resultado_a == 1 and resultado_b == 0 %}
+        <div class="formulario">
+            <form action="automato_finito" method="POST">
+                <label for="name">Sequência:</label>
+                <input type="text" id="sequecia" name="sequencia" placeholder="{{ sequencia }}" style="width: 200px;height: 30px; font-size: 15px;"
+                pattern="[0|1]*" title="Sequência com 0 ou 1"></br></br>
+                    
+                <button class="button" type="submit" value="Submit">Validar</button>
+            </form>
+        </div>
+        <div class="designacao">
+            <b>Sequência que começam e terminam com o mesmo simbolo: </b><u>Rejeitada</u></br></br>
+            <b>Sequência que têm um número de 0's múltiplos de 3: </b><u>Aceite</u>
+        </div>
+        <div class="resposta">
+            SEQUÊNCIA REJEITADA
+        </div>
+    {% endif %}        
+
+<!-------------------- RESULTADO => SEQ. A = REJEITADA // SEQ. B = REJEITADA -------------------->
+    {% if resultado_a == 1 and resultado_b == 1 %}
+        <div class="formulario">
+            <form action="automato_finito" method="POST">
+                <label for="name">Sequência:</label>
+                <input type="text" id="sequecia" name="sequencia" placeholder="{{ sequencia }}" style="width: 200px;height: 30px; font-size: 15px;"
+                pattern="[0|1]*" title="Sequência com 0 ou 1"></br></br>
+                    
+                <button class="button" type="submit" value="Submit">Validar</button>
+            </form>
+        </div>
+        <div class="designacao">
+            <b>Sequência que começam e terminam com o mesmo simbolo: </b><u>Rejeitada</u></br></br>
+            <b>Sequência que têm um número de 0's múltiplos de 3: </b><u>Rejeitada</u>
+        </div>
+        <div class="resposta">
+            SEQUÊNCIA REJEITADA
+        </div>
+    {% endif %} 
+</div>
+{% endblock %}
